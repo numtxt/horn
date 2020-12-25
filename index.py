@@ -296,4 +296,5 @@ async def on_message(message):
             embed.add_field(name="만약 문제가 생기면", value="아래에 있는 녀석에게 문의를 넣어! 분명 고쳐줄꺼야!", inline=False)
             await message.channel.send(embed=embed)
 
-client.run("NzkxNTYyMjA1Njg5OTM3OTIw.X-Q9wA.Wnw71OsR9CGybQU8L3sHHPJb8-8")
+account_token = os.environ("BOT_TOKEN")
+client.run(account_token)
