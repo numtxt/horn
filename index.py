@@ -16,6 +16,8 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=game)
 
 command = """."""
+hornf = "./horn/"
+timef = "./time/"
 
 # {user.id} 이걸로 유저 식별
 # user = message.author
@@ -48,9 +50,9 @@ async def on_message(message):
 
         if exits == 0:
             try:
-                source_file = open("/mnt/d/discord/data/horn/" + str(user.id) + " " + word + ".pickle", "rb")
+                source_file = open(hornf + str(user.id) + " " + word + ".pickle", "rb")
             except FileNotFoundError:
-                source_file = open("/mnt/d/discord/data/horn/" + str(user.id) + " " + word + ".pickle", "wb")
+                source_file = open(hornf + str(user.id) + " " + word + ".pickle", "wb")
                 inputer = str(1)
                 pickle.dump(inputer, source_file)
                 embed = discord.Embed(timestamp=message.created_at, colour=discord.Colour.dark_gold(), title=word + " (이)가 만들어졌어!!", description="얼마나 강해질지 벌써부터 기대되는걸!!")
@@ -72,9 +74,9 @@ async def on_message(message):
         cos = 0
 
         try:
-            time_file = open("/mnt/d/discord/data/time/" + str(user.id) + ".pickle", "rb")
+            time_file = open(timef + str(user.id) + ".pickle", "rb")
         except FileNotFoundError:
-            time_file = open("/mnt/d/discord/data/time/" + str(user.id) + ".pickle", "wb")
+            time_file = open(timef + str(user.id) + ".pickle", "wb")
             a = datetime.datetime.now()
             b = a + datetime.timedelta(seconds=10)
             pickle.dump(b, time_file)
@@ -98,7 +100,7 @@ async def on_message(message):
         if cos == 1:
             name = message.content.split(" ")[2:]
             word = ' '.join(name)
-            source_file = open("/mnt/d/discord/data/horn/" + str(user.id) + " " + word + ".pickle", "rb")
+            source_file = open(hornf + str(user.id) + " " + word + ".pickle", "rb")
             source = pickle.load(source_file)
             source_file.close()
             user_id = str(user.id)
@@ -210,7 +212,7 @@ async def on_message(message):
                     embed.add_field(name="작별 인사", value="잘가... " + word, inline=False)
                     await message.channel.send(embed=embed)
 
-                    source_file = ("/mnt/d/discord/data/horn/" + str(user.id) + " " + word + ".pickle")
+                    source_file = (hornf + str(user.id) + " " + word + ".pickle")
                     os.remove(source_file)
                 else:
                     embed = discord.Embed(timestamp=message.created_at, colour=discord.Colour.dark_red(), title=word + " (이)가 강화에 실패했군!", description="")
@@ -222,12 +224,12 @@ async def on_message(message):
                     embed.add_field(name="검 파괴 확률", value=str(paos) + "%", inline=False)
                     await message.channel.send(embed=embed)
 
-                source_file = open("/mnt/d/discord/data/horn/" + str(user.id) + " " + word + ".pickle", "wb")
+                source_file = open(hornf + str(user.id) + " " + word + ".pickle", "wb")
                 inputer = str(levels)
                 pickle.dump(inputer, source_file)
                 source_file.close()
 
-                time_file = open("/mnt/d/discord/data/time/" + str(user.id) + ".pickle", "wb")
+                time_file = open(timef + str(user.id) + ".pickle", "wb")
                 a = datetime.datetime.now()
                 b = a + datetime.timedelta(seconds=10)
                 pickle.dump(b, time_file)
@@ -241,10 +243,10 @@ async def on_message(message):
         # embed.set_image(url="")
         embed.set_footer(text=message.author, icon_url=message.author.avatar_url)
         user = message.author
-        file_list = os.listdir("/mnt/d/discord/data/horn/")
+        file_list = os.listdir(hornf)
         for i in file_list:
             if int(i.split(" ")[0]) == user.id:
-                source_file = open("/mnt/d/discord/data/horn/" + i, "rb")
+                source_file = open(hornf + i, "rb")
                 source = pickle.load(source_file)
                 source_file.close()
                 levels = int(source.split(' ')[0])
@@ -254,7 +256,7 @@ async def on_message(message):
         await message.channel.send(embed=embed)
 
     if message.content == "호른, 무기랭킹":
-        file_list = os.listdir("/mnt/d/discord/data/horn/")
+        file_list = os.listdir(hornf)
         st1 = 0
         st2 = 0
         st3 = 0
@@ -262,7 +264,7 @@ async def on_message(message):
         st1_name = ""
 
         for i in file_list:
-            source_file = open("/mnt/d/discord/data/horn/" + i, "rb")
+            source_file = open(hornf + i, "rb")
             source = pickle.load(source_file)
             source_file.close()
             if st1 <= int(source):
