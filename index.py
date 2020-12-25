@@ -15,8 +15,8 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=game)
 
 command = """."""
-hornf = "./horn/"
-timef = "./time/"
+hornf = "/horn/"
+timef = "/time/"
 
 # {user.id} 이걸로 유저 식별
 # user = message.author
