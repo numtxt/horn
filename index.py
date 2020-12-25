@@ -2,7 +2,6 @@ import discord
 import random
 import pickle
 import os
-import time
 import datetime
 
 client = discord.Client()
